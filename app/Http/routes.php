@@ -1,35 +1,26 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
 Route::get('/', function () {
     return view('partials.home');
 });
 
-Route::get('/flot', function () {
-    return view('partials.flot');
+Route::get('/', function () {
+    return view('partials.makanan');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
-
-Route::group(['middleware' => ['web']], function () {
-    //
+Route::get('/create-makanan', function () {
+    return view('partials.makanan.create');
 });
+
+Route::get('makanan', 'MakananController@index');
+
+Route::get('detail-makanan/{id}', 'MakananController@detail');
+
+Route::get('edit-makanan/{id}', 'MakananController@edit');
+
+Route::post('makanans', 'MakananController@store');
+
+Route::put('edit-makanan/{id}', 'MakananController@update');
+
+Route::get('hapus-makanan/{id}', 'MakananController@destroy');
+

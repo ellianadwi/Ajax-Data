@@ -28,11 +28,13 @@
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="/buku"><i class="fa fa-book fa-fw"></i> Buku</a>
+                <a href="/makanan"><i class="fa fa-cutlery fa-fw"></i> Makanan</a>
             </li>
+
             <li>
-                <a href="/anggota"><i class="fa fa-user fa-fw"></i> Anggota</a>
+                <a href="/minuman"><i class="fa fa-glass fa-fw"></i> Minuman</a>
             </li>
+
             <li>
                 <a href="../pages/tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
             </li>

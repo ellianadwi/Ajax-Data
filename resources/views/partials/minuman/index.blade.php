@@ -4,9 +4,9 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Makanan</h1>
+            <h1 class="page-header">Minuman</h1>
             <button type="button" class="btn btn-outline btn-default"
-                    onclick="location.href='/create-makanan';">Tambah data
+                    onclick="location.href='/create-minuman';">Tambah data
             </button>
         </div>
     </div>
@@ -16,37 +16,37 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Data Makanan
+                    Data Minuman
                 </div>
                 <div class="panel-body">
                     <div class="dataTable_wrapper">
-                        @if (count($makanans) > 0)
+                        @if (count($minumans) > 0)
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>Jenis Makanan</th>
+                                    <th>Jenis Minuman</th>
                                     <th>Rasa</th>
                                     <th>Harga</th>
                                     <th>Aksi</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($makanans as $makanan)
+                                @foreach($minumans as $minuman)
                                     <tr class="">
-                                        <td>{{$makanan->nama}}</td>
-                                        <td>{{$makanan->jenis_makanan}}</td>
-                                        <td>{{$makanan->rasa}}</td>
-                                        <td>{{$makanan->harga}}</td>
+                                        <td>{{$minuman->nama}}</td>
+                                        <td>{{$minuman->jenis_minuman}}</td>
+                                        <td>{{$minuman->rasa}}</td>
+                                        <td>{{$minuman->harga}}</td>
                                         <td>
                                             <button type="button" class="btn btn-outline btn-primary"
-                                                    onclick="location.href='/detail-makanan/{{$makanan->id}}';">Detail
+                                                    onclick="location.href='/detail-minuman/{{$minuman->id}}';">Detail
                                             </button>
                                             <button type="button" class="btn btn-outline btn-info"
-                                                    onclick="location.href='/edit-makanan/{{$makanan->id}}';">Edit
+                                                    onclick="location.href='/edit-minuman/{{$minuman->id}}';">Edit
                                             </button>
                                             <button type="button" class="btn btn-outline btn-danger"
-                                                    onclick="location.href='/hapus-makanan/{{$makanan->id}}';">Delete
+                                                    onclick="location.href='/hapus-minuman/{{$minuman->id}}';">Delete
                                             </button>
 
                                         </td>

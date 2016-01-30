@@ -65,9 +65,9 @@ class MakananRepository extends AbstractRepository implements Crudable, Paginabl
      */
     public function delete($id)
     {
-        parent::delete($id);
+       return parent::delete($id);
 
-        return redirect('/makanan');
+ //       return redirect('/makanan');
     }
 
     /**

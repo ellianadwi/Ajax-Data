@@ -1,17 +1,18 @@
 @extends('layouts.master')
 @section('title', 'Page Title')
 @section('content')
-
+<body onload="Index()">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Makanan</h1>
-            <button type="button" class="btn btn-outline btn-default"
-                    onclick="location.href='/create-makanan';">Tambah data
+            <button onclick="Create()"><i class="glyphicon glyphicon-plus"></i>
+                Tambah data
             </button>
         </div>
     </div>
 
     <br>
+    <div id="Index">
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -43,10 +44,10 @@
                                                     onclick="location.href='/detail-makanan/{{$makanan->id}}';">Detail
                                             </button>
                                             <button type="button" class="btn btn-outline btn-info"
-                                                    onclick="location.href='/edit-makanan/{{$makanan->id}}';">Edit
+                                                    onclick="Edit({{$makanan->id}})">Edit
                                             </button>
                                             <button type="button" class="btn btn-outline btn-danger"
-                                                    onclick="location.href='/hapus-makanan/{{$makanan->id}}';">Delete
+                                                    id="Delete" onclick="Hapus({{$makanan->id}})">Delete
                                             </button>
 
                                         </td>
@@ -62,5 +63,179 @@
             </div>
         </div>
     </div>
+    </div>
+    <div id="Create">
 
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Tambah Makanan
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <form id="Form-Create">
+                                    <div class="form-group">
+                                        <label>nama</label>
+                                        <label>:</label>
+                                        <input type="text" class="form-control" name="nama">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Jenis_makanan</label>
+                                        <label>:</label>
+                                        <input type="text" class="form-control" name="jenis_makanan">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Rasa</label>
+                                        <label>:</label>
+                                        <input type="text" class="form-control" name="rasa">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Harga</label>
+                                        <label>:</label>
+                                        <input type="text" class="form-control" name="harga">
+                                    </div>
+                                    <div class="form-group">
+
+                                        <input class="btn btn-outline btn-info" type="submit" id="Submit"
+                                               value="Simpan">
+                                        {{--onclick="location.href='/makanan/{{ $data->id }}}';">Simpan--}}
+                                        <button type="button" class="btn btn-outline btn-primary"
+                                                onclick="Index()">Kembali
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+        </div>
+
+</div>
+    <div id="Edit">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Edit Makanan #
+                    </div>
+                    <div class="panel-body">
+                        {{--<form role="form">--}}
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <form id="form">
+                                        {{ method_field('PUT') }}
+                                        <div class="form-group">
+                                            <label>Nama</label>
+                                            <label>:</label>
+                                            <input type="text" name="nama" class="form-control" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Jenis Makanan</label>
+                                            <label>:</label>
+                                            <input type="text" name="jenis_makanan" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>rasa</label>
+                                            <label>:</label>
+                                            <input type="text" name="rasa" class="form-control" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Harga</label>
+                                            <label>:</label>
+                                            <input type="text" name="harga" class="form-control" >
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-outline btn-info" type="submit" value="Simpan"
+                                            onclick="location.href='/makanan/';">Simpan
+                                            </button>
+                                            <button type="button" class="btn btn-outline btn-primary"
+                                                    onclick="location.href='/makanan';">Kembali
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        {{--</form>--}}
+
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+        </div>
+</div>
+        <!-- /.row -->
+    <script src="{!! asset('bower_components/jquery/dist/jquery.min.js') !!}"></script>
+    <script>
+        $(document).ready(function() {
+            $("Form-Create").submit(function(event){
+
+                event.preventDefault();
+                var $form = $(this),
+                        nama = $form.find("input[name='nama']").val(),
+                        jenis_makanan = $form.find("input[name='jenis_makanan']").val(),
+                        rasa = $form.find("input[name='rasa']").val(),
+                        harga = $form.find("input[name='harga']").val();
+//                $("#Form-Create").reset();
+                var posting = $.post('/makanan', {
+                    nama :nama,
+                    jenis_makanan :jenis_makanan,
+                    rasa :rasa,
+                    harga :harga
+                });
+
+                //Put the results in a div
+                posting.done(function(data){
+//                    console.log(data);
+                    window.alert(data.result.message);
+                    document.getElementById("Frm-Create").reset();
+                    location.reload();
+                    $('#Create').hide();
+                    $('#Edit').hide();
+                    $('#Index').show();
+                });
+            });
+        });
+
+    function Index() {
+        $('#Create').hide();
+        $('#Edit').hide();
+        $('#Index').show();
+    }
+
+    function Create() {
+        $('#Edit').hide();
+        $('#Index').hide();
+        $('#Create').show();
+    }
+
+    function Edit() {
+        $('#Index').hide();
+        $('#Create').hide();
+        $('#Edit').show();
+    }
+
+    function Hapus(id) {
+        var result = confirm("Apakah Anda Yakin Ingin Menghapus ? ");
+        if (result) {
+            $.ajax({
+                method :"get",
+                url:'/hapus-makanan/' +id,
+                data:{}
+            })
+                    .done(function (data) {
+                        window.alert(data.result.message);
+                        location.reload();
+                    });
+        }
+    }
+    </script>
+    </body>
 @endsection

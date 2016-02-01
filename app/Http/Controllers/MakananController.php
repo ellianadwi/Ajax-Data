@@ -48,9 +48,10 @@ class MakananController extends Controller
 
     public function show($id)
     {
-        return view('partials.makanan.detail', [
-            'data' => $this->makan->find($id),
-        ]);
+//        return view('partials.makanan.detail', [
+//            'data' => $this->makan->find($id),
+//        ]);
+        return $this->makan->find($id);
     }
 
     public function update($id, Request $request)

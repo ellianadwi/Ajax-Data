@@ -22,7 +22,7 @@
                 <div class="panel-body">
                     <div class="dataTable_wrapper">
                         @if (count($makanans) > 0)
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table class="table table-striped table-bordered table-hover" >
                                 <thead>
                                 <tr>
                                     <th>Nama</th>
@@ -32,29 +32,29 @@
                                     <th>Aksi</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                @foreach($makanans as $makanan)
-                                    <tr class="">
-                                        <td>{{$makanan->nama}}</td>
-                                        <td>{{$makanan->jenis_makanan}}</td>
-                                        <td>{{$makanan->rasa}}</td>
-                                        <td>{{$makanan->harga}}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline btn-primary"
-                                                    onclick="location.href='/detail-makanan/{{$makanan->id}}';">Detail
-                                            </button>
-                                            <button type="button" class="btn btn-outline btn-info"
-                                                    onclick="Edit({{$makanan->id}})">Edit
-                                            </button>
-                                            <button type="button" class="btn btn-outline btn-danger"
-                                                    id="Delete" onclick="Hapus({{$makanan->id}})">Delete
-                                            </button>
+                                <tbody id="tampildata">
+                                {{--@foreach($makanans as $makanan)--}}
+                                    {{--<tr class="">--}}
+                                        {{--<td>{{$makanan->nama}}</td>--}}
+                                        {{--<td>{{$makanan->jenis_makanan}}</td>--}}
+                                        {{--<td>{{$makanan->rasa}}</td>--}}
+                                        {{--<td>{{$makanan->harga}}</td>--}}
+                                        {{--<td>--}}
+                                            {{--<button type="button" class="btn btn-outline btn-primary"--}}
+                                                    {{--onclick="location.href='/detail-makanan/{{$makanan->id}}';">Detail--}}
+                                            {{--</button>--}}
+                                            {{--<button type="button" class="btn btn-outline btn-info"--}}
+                                                    {{--onclick="Edit({{$makanan->id}})">Edit--}}
+                                            {{--</button>--}}
+                                            {{--<button type="button" class="btn btn-outline btn-danger"--}}
+                                                    {{--id="Delete" onclick="Hapus({{$makanan->id}})">Delete--}}
+                                            {{--</button>--}}
 
-                                        </td>
+                                        {{--</td>--}}
 
-                                    </tr>
-                                @endforeach
-                                </tbody>
+                                    {{--</tr>--}}
+                                {{--@endforeach--}}
+                                </tbodyid>
                             </table>
                         @endif
                     </div>
@@ -125,11 +125,9 @@
                         Edit Makanan #
                     </div>
                     <div class="panel-body">
-                        {{--<form role="form">--}}
+                        <form role="form" id="Form-Edit">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form id="form">
-                                        {{ method_field('PUT') }}
                                         <div class="form-group">
                                             <label>Nama</label>
                                             <label>:</label>
@@ -152,11 +150,11 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-outline btn-info" type="submit" value="Simpan"
-                                            onclick="location.href='/makanan/';">Simpan
-                                            </button>
+                                            <input class="btn btn-outline btn-info" type="submit" value="Simpan">
+                                            {{--onclick="location.href='/makanan/{{$data->id}}';">Simpan--}}
+                                            {{--</button>--}}
                                             <button type="button" class="btn btn-outline btn-primary"
-                                                    onclick="location.href='/makanan';">Kembali
+                                                    onclick="Index();">Kembali
                                             </button>
                                         </div>
                                     </form>
@@ -175,7 +173,10 @@
     <script src="{!! asset('bower_components/jquery/dist/jquery.min.js') !!}"></script>
     <script>
         $(document).ready(function() {
-            $("Form-Create").submit(function(event){
+            $('#Create').hide();
+            $('#Edit').hide();
+            getAjax();
+            $("#Form-Create").submit(function(event){
 
                 event.preventDefault();
                 var $form = $(this),
@@ -195,11 +196,8 @@
                 posting.done(function(data){
 //                    console.log(data);
                     window.alert(data.result.message);
-                    document.getElementById("Frm-Create").reset();
-                    location.reload();
-                    $('#Create').hide();
-                    $('#Edit').hide();
-                    $('#Index').show();
+                    getAjax();
+                    Index();
                 });
             });
         });
@@ -216,10 +214,72 @@
         $('#Create').show();
     }
 
-    function Edit() {
+        function getAjax() {
+            $("#tampildata").children().remove();
+            $.getJSON("/data-makanan", function (data) {
+                $.each(data.slice(0,9), function (i, data) {
+                    $("#tampildata").append("" +
+                            "<tr>" +
+                            "<td>" + data.nama + "</td>" +
+                            "<td>" + data.jenis_makanan+ "</td>" +
+                            "<td>" + data.rasa + "</td>" +
+                            "<td>" + data.harga + "</td>" +
+                            "<td><button type='button' class='btn btn-outline btn-info' " +
+                            "onclick='Edit("+ data.id +")'>Edit</button>" +
+                            "<button type='button' class='btn btn-outline btn-danger' " +
+                            "onclick='Hapus("+ data.id +")'>Delete</button>" +
+                            "</td>" +
+                            "</tr>");
+                })
+            });
+        }
+
+    function Edit(id) {
         $('#Index').hide();
         $('#Create').hide();
-        $('#Edit').show();
+        $('#Edit').hide();
+        $.ajax({
+            method:"Get",
+            url: '/makanan/' + id,
+            data: {}
+        })
+                .done(function (data){
+                    console.log(data.nama);
+//                    var $form = $(this),
+                    nama = $("input[name='nama']").val(data.nama);
+                    jenis_makanan = $("input[name='jenis_makanan']").val(data.jenis_makanan);
+                    rasa = $("input[name='rasa']").val(data.rasa);
+                    harga = $("input[name='harga']").val(data.harga);
+
+                    $('#Edit').show();
+                });
+
+        $("#Form-Edit").submit(function(event){
+
+            event.preventDefault();
+            var $form = $(this),
+                    nama = $form("input[name='nama']").val(),
+                    jenis_makanan = $form("input[name='jenis_makanan']").val(),
+                    rasa = $form("input[name='rasa']").val(),
+                    harga = $form("input[name='harga']").val();
+
+            $.ajax({
+                method: "PUT",
+                url: '/makanan/' + id,
+                data: {
+                    nama: nama,
+                    jenis_makanan: jenis_makanan,
+                    rasa: rasa,
+                    harga: harga
+                }
+            })
+                    .done(function (data) {
+                        window.alert(data.result.message);
+                        getAjax();
+//                        Index();
+                    });
+
+        });
     }
 
     function Hapus(id) {
@@ -232,7 +292,8 @@
             })
                     .done(function (data) {
                         window.alert(data.result.message);
-                        location.reload();
+//                        location.reload();
+                        getAjax();
                     });
         }
     }

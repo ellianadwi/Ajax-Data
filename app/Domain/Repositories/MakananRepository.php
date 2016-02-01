@@ -30,7 +30,7 @@ class MakananRepository extends AbstractRepository implements Crudable, Paginabl
     public function create(array $data)
     {
 
-        parent::create([
+        return parent::create([
                 'nama' => e($data['nama']),
                 'jenis_makanan' => e($data['jenis_makanan']),
                 'rasa' => e($data['rasa']),
@@ -38,12 +38,12 @@ class MakananRepository extends AbstractRepository implements Crudable, Paginabl
             ]
         );
 
-        return redirect('/makanan');
+//        return redirect('/makanan');
     }
 
     public function update($id, array $data)
     {
-        parent::update($id, [
+        return parent::update($id, [
                 'nama' => e($data['nama']),
                 'jenis_makanan' => e($data['jenis_makanan']),
                 'rasa' => e($data['rasa']),
@@ -51,7 +51,7 @@ class MakananRepository extends AbstractRepository implements Crudable, Paginabl
             ]
         );
 
-        return redirect('/makanan');
+//        return redirect('/makanan');
     }
 
     public function delete($id)

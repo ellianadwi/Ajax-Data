@@ -36,6 +36,11 @@ class MinumanController extends Controller
         ]);
     }
 
+    public function getData($limit = 10)
+    {
+        return $this->minum->getdata();
+    }
+
     public function store(Request $request)
     {
         return $this->minum->create($request->all());
@@ -57,4 +62,6 @@ class MinumanController extends Controller
     {
         return $this->minum->delete($id);
     }
+
+
 }

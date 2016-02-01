@@ -13,20 +13,12 @@ class MinumanRepository extends AbstractRepository implements Crudable, Paginabl
         $this->model = $minuman;
     }
 
-    /**
-     * @param int $id
-     * @param array $columns
-     * @return \Illuminate\Database\Eloquent\Model
-     */
+
     public function find($id, array $columns = ['*'])
     {
         return parent::find($id, $columns);
     }
 
-    /**
-     * @param array $data
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function create(array $data)
     {
 
@@ -41,11 +33,7 @@ class MinumanRepository extends AbstractRepository implements Crudable, Paginabl
         return redirect('/minuman');
     }
 
-    /**
-     * @param       $id
-     * @param array $data
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
+
     public function update($id, array $data)
     {
         parent::update($id, [
@@ -59,10 +47,6 @@ class MinumanRepository extends AbstractRepository implements Crudable, Paginabl
         return redirect('/minuman');
     }
 
-    /**
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function delete($id)
     {
         parent::delete($id);
@@ -70,22 +54,22 @@ class MinumanRepository extends AbstractRepository implements Crudable, Paginabl
         return redirect('/minuman');
     }
 
-    /**
-     * @param $query
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
+
     public function search($query)
     {
         return parent::likeSearch('nama', $query);
     }
 
-    /**
-     * @param int $limit
-     * @param array $columns
-     * @return \Illuminate\Pagination\Paginator
-     */
+
     public function getByPage($limit = 10, array $columns = ['*'])
     {
         return parent::getByPage($limit, $columns);
+    }
+
+    public function getData()
+    {
+        $data=$this->model->get();
+
+        return $data;
     }
 }

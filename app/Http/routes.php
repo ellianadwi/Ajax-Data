@@ -24,6 +24,8 @@ Route::put('edit-makanan/{id}', 'MakananController@update');
 
 Route::get('hapus-makanan/{id}', 'MakananController@destroy');
 
+Route::get('/data-makanan','MakananController@getData');
+
 
 
 Route::get('minuman', 'MinumanController@index');
@@ -38,3 +40,4 @@ Route::put('edit-minuman/{id}', 'MinumanController@update');
 
 Route::get('hapus-minuman/{id}', 'MinumanController@destroy');
 
+Route::get('/data-minuman','MinumanController@getData');

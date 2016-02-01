@@ -36,6 +36,11 @@ class MakananController extends Controller
         ]);
     }
 
+    public function getData($limit = 10)
+    {
+        return $this->makan->getdata();
+    }
+
     public function store(Request $request)
     {
         return $this->makan->create($request->all());
@@ -57,4 +62,6 @@ class MakananController extends Controller
     {
         return $this->makan->delete($id);
     }
+
 }
+

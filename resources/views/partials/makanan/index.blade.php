@@ -33,6 +33,7 @@
                                 </tr>
                                 </thead>
                                 <tbody id="tampildata">
+
                                 {{--@foreach($makanans as $makanan)--}}
                                     {{--<tr class="">--}}
                                         {{--<td>{{$makanan->nama}}</td>--}}

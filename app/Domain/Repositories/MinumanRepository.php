@@ -22,7 +22,7 @@ class MinumanRepository extends AbstractRepository implements Crudable, Paginabl
     public function create(array $data)
     {
 
-        parent::create([
+        return parent::create([
                 'nama' => e($data['nama']),
                 'jenis_minuman' => e($data['jenis_minuman']),
                 'rasa' => e($data['rasa']),
@@ -30,13 +30,13 @@ class MinumanRepository extends AbstractRepository implements Crudable, Paginabl
             ]
         );
 
-        return redirect('/minuman');
+//        return redirect('/minuman');
     }
 
 
     public function update($id, array $data)
     {
-        parent::update($id, [
+        return parent::update($id, [
                 'nama' => e($data['nama']),
                 'jenis_minuman' => e($data['jenis_minuman']),
                 'rasa' => e($data['rasa']),
@@ -44,14 +44,14 @@ class MinumanRepository extends AbstractRepository implements Crudable, Paginabl
             ]
         );
 
-        return redirect('/minuman');
+//        return redirect('/minuman');
     }
 
     public function delete($id)
     {
-        parent::delete($id);
+       return parent::delete($id);
 
-        return redirect('/minuman');
+//        return redirect('/minuman');
     }
 
 

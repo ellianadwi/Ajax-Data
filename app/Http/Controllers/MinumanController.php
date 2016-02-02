@@ -48,9 +48,11 @@ class MinumanController extends Controller
 
     public function show($id)
     {
-        return view('partials.minuman.detail', [
-            'data' => $this->minum->find($id),
-        ]);
+//        return view('partials.minuman.detail', [
+//            'data' => $this->minum->find($id),
+//        ]);
+
+        return $this->minum->find($id);
     }
 
     public function update($id, Request $request)

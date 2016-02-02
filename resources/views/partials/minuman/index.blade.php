@@ -114,6 +114,9 @@
                 <!-- /.panel -->
             </div>
         </div>
+    </div>
+    </div>
+
 
     <div id="Edit">
         <div class="row">
@@ -168,6 +171,7 @@
                 </div>
                 <!-- /.panel -->
             </div>
+        </div>
         </div>
 
         <!-- /.row -->

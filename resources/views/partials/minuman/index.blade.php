@@ -34,6 +34,7 @@
                                 </tr>
                                 </thead>
                                 <tbodyid id="tambahdata">
+
                                 {{--@foreach($minumans as $minuman)--}}
                                     {{--<tr class="">--}}
                                         {{--<td>{{$minuman->nama}}</td>--}}
@@ -75,7 +76,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form action="/minumans" method="post">
+                                <form id="Form-Create">
                                     <div class="form-group">
                                         <label>nama</label>
                                         <label>:</label>
@@ -101,7 +102,7 @@
                                         <input class="btn btn-outline btn-info" type="submit" value="Simpan">
                                         {{--onclick="location.href='/minuman/{{ $data->id }}}';">Simpan--}}
                                         <button type="button" class="btn btn-outline btn-primary"
-                                                onclick="location.href='/minuman';">Kembali
+                                                onclick="Index()">Kembali
                                         </button>
                                     </div>
                                 </form>
@@ -119,51 +120,54 @@
 
 
     <div id="Edit">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Minuman</h1>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Edit Minuman # {{ $data->id }}
+                        Edit Minuman
                     </div>
                     <div class="panel-body">
-                        {{--<form role="form">--}}
-                        @if (count($data) > 0)
+                        <form role="form" id="Form-Edit">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form role="form" action="" method="post">
-                                        {{ method_field('PUT') }}
                                         <div class="form-group">
                                             <label>Nama</label>
                                             <label>:</label>
-                                            <input type="text" name="nama" class="form-control" value="{{ $data->nama }}">
+                                            <input type="text" name="nama" class="form-control" >
                                         </div>
                                         <div class="form-group">
                                             <label>Jenis Minuman</label>
                                             <label>:</label>
-                                            <input type="text" name="jenis_minuman" class="form-control" value="{{ $data->jenis_minuman }}">
+                                            <input type="text" name="jenis_minuman" class="form-control" >
                                         </div>
                                         <div class="form-group">
                                             <label>rasa</label>
                                             <label>:</label>
-                                            <input type="text" name="rasa" class="form-control" value="{{ $data->rasa }}">
+                                            <input type="text" name="rasa" class="form-control" >
                                         </div>
                                         <div class="form-group">
                                             <label>Harga</label>
                                             <label>:</label>
-                                            <input type="text" name="harga" class="form-control" value="{{ $data->harga }}">
+                                            <input type="text" name="harga" class="form-control" >
                                         </div>
 
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-outline btn-info">Simpan
                                             </button>
                                             <button type="button" class="btn btn-outline btn-primary"
-                                                    onclick="location.href='/minuman';">Kembali
+                                                    onclick="Index()">Kembali
                                             </button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                        @endif
+
                         {{--</form>--}}
 
                     </div>
@@ -226,7 +230,7 @@
                         $("#tampildata").append("" +
                                 "<tr>" +
                                 "<td>" + data.nama + "</td>" +
-                                "<td>" + data.jenis_makanan+ "</td>" +
+                                "<td>" + data.jenis_minuman+ "</td>" +
                                 "<td>" + data.rasa + "</td>" +
                                 "<td>" + data.harga + "</td>" +
                                 "<td><button type='button' class='btn btn-outline btn-info' " +

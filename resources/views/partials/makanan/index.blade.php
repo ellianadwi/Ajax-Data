@@ -259,10 +259,10 @@
 
             event.preventDefault();
             var $form = $(this),
-                    nama = $form("input[name='nama']").val(),
-                    jenis_makanan = $form("input[name='jenis_makanan']").val(),
-                    rasa = $form("input[name='rasa']").val(),
-                    harga = $form("input[name='harga']").val();
+                    nama = $form.find("input[name='nama']").val(),
+                    jenis_makanan = $form.find("input[name='jenis_makanan']").val(),
+                    rasa = $form.find("input[name='rasa']").val(),
+                    harga = $form.find("input[name='harga']").val();
 
             $.ajax({
                 method: "PUT",
@@ -277,7 +277,7 @@
                     .done(function (data) {
                         window.alert(data.result.message);
                         getAjax();
-//                        Index();
+                        Index();
                     });
 
         });

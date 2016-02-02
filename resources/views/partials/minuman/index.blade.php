@@ -22,8 +22,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="dataTable_wrapper">
-                        @if (count($minumans) > 0)
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table class="table table-striped table-bordered table-hover" >
                                 <thead>
                                 <tr>
                                     <th>Nama</th>
@@ -33,7 +32,7 @@
                                     <th>Aksi</th>
                                 </tr>
                                 </thead>
-                                <tbodyid id="tambahdata">
+                                <tbody id="tampildata">
 
                                 {{--@foreach($minumans as $minuman)--}}
                                     {{--<tr class="">--}}
@@ -56,16 +55,15 @@
 
                                     {{--</tr>--}}
                                 {{--@endforeach--}}
-                                </tbodyid>
+                                </tbody>
                             </table>
-                        @endif
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
-
+</div>
     <div id="Create">
         <div class="row">
             <div class="col-lg-12">
@@ -116,16 +114,9 @@
             </div>
         </div>
     </div>
-    </div>
 
 
     <div id="Edit">
-
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Minuman</h1>
-            </div>
-        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -158,12 +149,14 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-outline btn-info">Simpan
-                                            </button>
+                                            <input class="btn btn-outline btn-info" type="submit"
+                                                   value="Simpan">
                                             <button type="button" class="btn btn-outline btn-primary"
                                                     onclick="Index()">Kembali
                                             </button>
+                                            </div>
                                         </div>
+                                    </div>
                                     </form>
                                 </div>
                             </div>
@@ -175,8 +168,9 @@
                 </div>
                 <!-- /.panel -->
             </div>
-        </div>
-        </div>
+    </div>
+    </div>
+
 
         <!-- /.row -->
         <script src="{!! asset('bower_components/jquery/dist/jquery.min.js') !!}"></script>
@@ -267,10 +261,10 @@
 
                     event.preventDefault();
                     var $form = $(this),
-                            nama = $form("input[name='nama']").val(),
-                            jenis_minuman = $form("input[name='jenis_minuman']").val(),
-                            rasa = $form("input[name='rasa']").val(),
-                            harga = $form("input[name='harga']").val();
+                            nama = $form.find("input[name='nama']").val(),
+                            jenis_minuman = $form.find("input[name='jenis_minuman']").val(),
+                            rasa = $form.find("input[name='rasa']").val(),
+                            harga = $form.find("input[name='harga']").val();
 
                     $.ajax({
                                 method: "PUT",
@@ -285,7 +279,7 @@
                             .done(function (data) {
                                 window.alert(data.result.message);
                                 getAjax();
-//                        Index();
+                        Index();
                             });
 
                 });

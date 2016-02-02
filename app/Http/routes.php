@@ -38,7 +38,7 @@ Route::get('detail-minuman/{id}', 'MinumanController@detail');
 
 Route::get('edit-minuman/{id}', 'MinumanController@edit');
 
-Route::post('minumans', 'MinumanController@store');
+Route::post('minuman', 'MinumanController@store');
 
 Route::put('minuman/{id}', 'MinumanController@update');
 

@@ -19,6 +19,9 @@
                 <div class="panel-heading">
                     Data Makanan
                 </div>
+                <center> <div id="loader2">
+                        <img src="{!! asset('images/download1.gif') !!}" >
+                    </div></center>
                 <div class="panel-body">
                     <div class="dataTable_wrapper">
                         @if (count($makanans) > 0)
@@ -32,7 +35,7 @@
                                     <th>Aksi</th>
                                 </tr>
                                 </thead>
-                                <tbody id="tampildata">
+                                <tbody id="data-example">
 
                                 {{--@foreach($makanans as $makanan)--}}
                                     {{--<tr class="">--}}
@@ -55,7 +58,7 @@
 
                                     {{--</tr>--}}
                                 {{--@endforeach--}}
-                                </tbodyid>
+                                </tbody>
                             </table>
                         @endif
                     </div>
@@ -157,9 +160,9 @@
                                             <button type="button" class="btn btn-outline btn-primary"
                                                     onclick="Index();">Kembali
                                             </button>
-                                        </div>
+                                        </div></div>
+                                    </div>
                                     </form>
-                                </div>
                             </div>
                         {{--</form>--}}
 
@@ -170,30 +173,45 @@
             </div>
         </div>
 </div>
-    <div class="modal fade">
+
+
+    {{--Modal--}}
+
+    {{--Detail Modal--}}
+    <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
+
+            <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Modal title</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4><font face="Bernard MT"></font></h4>
                 </div>
                 <div class="modal-body">
-                    <p>One fine body…</p>
+                    {{--<p>Some text in the modal.</p>--}}
+                    <div id="loader-wrapper">
+                        <div id="loader"></div>
+                    </div>
+                    <table class="table table-striped">
+                        <tbody id="modal-body">
+
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Kembali</button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-        <!-- /.row -->
+            </div>
+        </div>
+    </div>
+
+
     <script src="{!! asset('bower_components/jquery/dist/jquery.min.js') !!}"></script>
     <script>
         $(document).ready(function() {
+            var currentRequest = null;
             $('#Create').hide();
             $('#Edit').hide();
-            getAjax();
             $("#Form-Create").submit(function(event){
 
                 event.preventDefault();
@@ -224,38 +242,60 @@
         $('#Create').hide();
         $('#Edit').hide();
         $('#Index').show();
+        $("#data-example").children().remove();
+        document.getElementById("Form-Create").reset();
+        document.getElementById("Form-Edit").reset();
+        getAjax();
     }
 
     function Create() {
         $('#Edit').hide();
         $('#Index').hide();
         $('#Create').show();
+        document.getElementById("Form-Create").reset();
+        document.getElementById("Form-Edit").reset();
     }
 
         function getAjax() {
-            $("#tampildata").children().remove();
-            $.getJSON("/data-makanan", function (data) {
-                $.each(data.slice(0,9), function (i, data) {
-                    $("#tampildata").append("" +
-                            "<tr>" +
-                            "<td>" + data.nama + "</td>" +
-                            "<td>" + data.jenis_makanan+ "</td>" +
-                            "<td>" + data.rasa + "</td>" +
-                            "<td>" + data.harga + "</td>" +
-                            "<td><button type='button' class='btn btn-outline btn-info' " +
-                            "onclick='Edit("+ data.id +")'>Edit</button>" +
-                            "<button type='button' class='btn btn-outline btn-danger' " +
-                            "onclick='Hapus("+ data.id +")'>Delete</button>" +
-                            "</td>" +
-                            "</tr>");
-                })
-            });
+            $("#data-example").children().remove();
+
+            $("#loader2").delay(2000).animate({
+                opacity: 0,
+                width: 0,
+                height: 0
+
+            }, 500);
+            setTimeout(function () {
+                $.getJSON("/data-makanan", function (data) {
+                    var jumlah = data.length;
+                    $.each(data.slice(0, jumlah), function (i, data) {
+                        $("#data-example").append("" +
+                                "<tr>" +
+                                "<td>" + data.nama + "</td>" +
+                                "<td>" + data.jenis_makanan + "</td>" +
+                                "<td>" + data.rasa + "</td>" +
+                                "<td>" + data.harga + "</td>" +
+
+                                "<td><button type='button' class='btn btn-outline btn-primary' data-toggle='modal' data-target='#myModal'  " +
+                                "onclick='Detail(" + data.id + ")'>Detail</button>" +
+                                "<td><button type='button' class='btn btn-outline btn-info' " +
+                                "onclick='Edit(" + data.id + ")'>Edit</button>" +
+                                "<button type='button' class='btn btn-outline btn-danger' " +
+                                "onclick='Hapus(" + data.id + ")'>Delete</button>" +
+                                "</td>" +
+                                "</tr>");
+                    })
+                });
+            }, 2200);
         }
 
     function Edit(id) {
         $('#Index').hide();
         $('#Create').hide();
         $('#Edit').hide();
+        document.getElementById("Form-Create").reset();
+        document.getElementById("Form-Edit").reset();
+
         $.ajax({
             method:"Get",
             url: '/makanan/' + id,
@@ -281,7 +321,7 @@
                     rasa = $form.find("input[name='rasa']").val(),
                     harga = $form.find("input[name='harga']").val();
 
-            $.ajax({
+            currentRequest = $.ajax({
                 method: "PUT",
                 url: '/makanan/' + id,
                 data: {
@@ -289,29 +329,60 @@
                     jenis_makanan: jenis_makanan,
                     rasa: rasa,
                     harga: harga
+                },
+                beforeSend: function () {
+                    if (currentRequest != null) {
+                        currentRequest.abort();
+                    }
+                },
+                success: function (data) {
+                    window.alert(data.result.message);
+                    Index();
+                },
+                error: function (data) {
+                    window.alert(data.result.message);
+                    Index();
                 }
-            })
-                    .done(function (data) {
-                        window.alert(data.result.message);
-                        getAjax();
-                        Index();
-                    });
-
+            });
         });
+
+
     }
+
+
+        function Detail(id) {
+            $("#modal-body").children().remove();
+            $.ajax({
+                method: "GET",
+                url: '/makanan/' + id,
+                data: {},
+                beforeSend: function () {
+                    $('#loader-wrapper').show();
+                },
+                success: function (data) {
+//                    $('#loader').hide();
+                    $("#loader-wrapper").hide();
+                    $("#modal-body").append("<tr><td> Nama </td><td> : </td><td>" + data.nama + "</td></tr>" +
+                            "<tr><td> Jenis Makanan </td><td> : </td><td>" + data.jenis_makanan + "</td></tr>" +
+                            "<tr><td> Rasa </td><td> : </td><td>" + data.rasa + "</td></tr>" +
+                            "<tr><td> Harga</td><td> : </td><td>" + data.harga + "</td></tr>"
+                    );
+                }
+            });
+        }
 
     function Hapus(id) {
         var result = confirm("Apakah Anda Yakin Ingin Menghapus ? ");
         if (result) {
             $.ajax({
-                method :"get",
+                method :"DELETE",
                 url:'/hapus-makanan/' +id,
                 data:{}
             })
                     .done(function (data) {
                         window.alert(data.result.message);
-//                        location.reload();
-                        getAjax();
+                        table.ajax.reload(null, false);
+                        Index();
                     });
         }
     }

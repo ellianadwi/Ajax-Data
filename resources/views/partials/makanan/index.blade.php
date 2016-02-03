@@ -1,31 +1,33 @@
 @extends('layouts.master')
 @section('title', 'Page Title')
 @section('content')
-<body onload="Index()">
+    <body onload="Index()">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Makanan</h1>
-            <button onclick="Create()"><i class="glyphicon glyphicon-plus"></i>
-                Tambah data
-            </button>
         </div>
     </div>
 
     <br>
     <div id="Index">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Data Makanan
-                </div>
-                <center> <div id="loader2">
-                        <img src="{!! asset('images/download1.gif') !!}" >
-                    </div></center>
-                <div class="panel-body">
-                    <div class="dataTable_wrapper">
-                        @if (count($makanans) > 0)
-                            <table class="table table-striped table-bordered table-hover" >
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <button type="button" class="btn btn-outline btn-default"
+                                onclick="Create()">
+                            Tambah data
+                        </button>
+                    </div>
+                    <center>
+                        <div id="loader2">
+                            <img src="{!! asset('images/download1.gif') !!}">
+                        </div>
+                    </center>
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper">
+
+                            <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th>Nama</th>
@@ -36,37 +38,15 @@
                                 </tr>
                                 </thead>
                                 <tbody id="data-example">
-
-                                {{--@foreach($makanans as $makanan)--}}
-                                    {{--<tr class="">--}}
-                                        {{--<td>{{$makanan->nama}}</td>--}}
-                                        {{--<td>{{$makanan->jenis_makanan}}</td>--}}
-                                        {{--<td>{{$makanan->rasa}}</td>--}}
-                                        {{--<td>{{$makanan->harga}}</td>--}}
-                                        {{--<td>--}}
-                                            {{--<button type="button" class="btn btn-outline btn-primary"--}}
-                                                    {{--onclick="location.href='/detail-makanan/{{$makanan->id}}';">Detail--}}
-                                            {{--</button>--}}
-                                            {{--<button type="button" class="btn btn-outline btn-info"--}}
-                                                    {{--onclick="Edit({{$makanan->id}})">Edit--}}
-                                            {{--</button>--}}
-                                            {{--<button type="button" class="btn btn-outline btn-danger"--}}
-                                                    {{--id="Delete" onclick="Hapus({{$makanan->id}})">Delete--}}
-                                            {{--</button>--}}
-
-                                        {{--</td>--}}
-
-                                    {{--</tr>--}}
-                                {{--@endforeach--}}
                                 </tbody>
                             </table>
-                        @endif
-                    </div>
 
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <div id="Create">
 
@@ -120,7 +100,7 @@
             </div>
         </div>
 
-</div>
+    </div>
     <div id="Edit">
         <div class="row">
             <div class="col-lg-12">
@@ -132,25 +112,28 @@
                         <form role="form" id="Form-Edit">
                             <div class="row">
                                 <div class="col-lg-6">
+                                    <form id="Form-Edit">
+                                        <input type="hidden" name="id">
                                         <div class="form-group">
                                             <label>Nama</label>
                                             <label>:</label>
-                                            <input type="text" name="nama" class="form-control" >
+                                            <input type="text" name="nama" class="form-control" id="nama">
                                         </div>
                                         <div class="form-group">
                                             <label>Jenis Makanan</label>
                                             <label>:</label>
-                                            <input type="text" name="jenis_makanan" class="form-control">
+                                            <input type="text" name="jenis_makanan" class="form-control"
+                                                   id="jenis_makanan">
                                         </div>
                                         <div class="form-group">
                                             <label>rasa</label>
                                             <label>:</label>
-                                            <input type="text" name="rasa" class="form-control" >
+                                            <input type="text" name="rasa" class="form-control" id="rasa">
                                         </div>
                                         <div class="form-group">
                                             <label>Harga</label>
                                             <label>:</label>
-                                            <input type="text" name="harga" class="form-control" >
+                                            <input type="text" name="harga" class="form-control" id="harga">
                                         </div>
 
                                         <div class="form-group">
@@ -160,19 +143,21 @@
                                             <button type="button" class="btn btn-outline btn-primary"
                                                     onclick="Index();">Kembali
                                             </button>
-                                        </div></div>
-                                    </div>
+                                        </div>
                                     </form>
+                                </div>
                             </div>
-                        {{--</form>--}}
-
+                        </form>
                     </div>
-                    <!-- /.panel-body -->
+                    {{--</form>--}}
+
                 </div>
-                <!-- /.panel -->
+                <!-- /.panel-body -->
             </div>
+            <!-- /.panel -->
         </div>
-</div>
+    </div>
+    </div>
 
 
     {{--Modal--}}
@@ -208,12 +193,12 @@
 
     <script src="{!! asset('bower_components/jquery/dist/jquery.min.js') !!}"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var currentRequest = null;
             $('#Create').hide();
             $('#Edit').hide();
-            $("#Form-Create").submit(function(event){
 
+            $("#Form-Create").submit(function (event) {
                 event.preventDefault();
                 var $form = $(this),
                         nama = $form.find("input[name='nama']").val(),
@@ -222,39 +207,76 @@
                         harga = $form.find("input[name='harga']").val();
 //                $("#Form-Create").reset();
                 var posting = $.post('/makanan', {
-                    nama :nama,
-                    jenis_makanan :jenis_makanan,
-                    rasa :rasa,
-                    harga :harga
+                    nama: nama,
+                    jenis_makanan: jenis_makanan,
+                    rasa: rasa,
+                    harga: harga
                 });
-
                 //Put the results in a div
-                posting.done(function(data){
+                posting.done(function (data) {
 //                    console.log(data);
                     window.alert(data.result.message);
-                    getAjax();
+//                    getAjax();
                     Index();
                 });
+                return false;
             });
+
+            $("#Form-Edit").submit(function (event) {
+
+                event.preventDefault();
+                var $form = $(this),
+                        id = $form.find("input[name='id']").val(),
+                        nama = $form.find("input[name='nama']").val(),
+                        jenis_makanan = $form.find("input[name='jenis_makanan']").val(),
+                        rasa = $form.find("input[name='rasa']").val(),
+                        harga = $form.find("input[name='harga']").val();
+
+                currentRequest = $.ajax({
+                    method: "PUT",
+                    url: '/makanan/' + id,
+                    data: {
+                        nama: nama,
+                        jenis_makanan: jenis_makanan,
+                        rasa: rasa,
+                        harga: harga
+                    },
+                    beforeSend: function () {
+                        if (currentRequest != null) {
+                            currentRequest.abort();
+                        }
+                    },
+                    success: function (data) {
+                        window.alert(data.result.message);
+                        Index();
+                    },
+                    error: function (data) {
+                        window.alert(data.result.message);
+                        Index();
+                    }
+                });
+            });
+
+
         });
 
-    function Index() {
-        $('#Create').hide();
-        $('#Edit').hide();
-        $('#Index').show();
-        $("#data-example").children().remove();
-        document.getElementById("Form-Create").reset();
-        document.getElementById("Form-Edit").reset();
-        getAjax();
-    }
+        function Index() {
+            $('#Create').hide();
+            $('#Edit').hide();
+            $('#Index').show();
+            $("#data-example").children().remove();
+            document.getElementById("Form-Create").reset();
+            document.getElementById("Form-Edit").reset();
+            getAjax();
+        }
 
-    function Create() {
-        $('#Edit').hide();
-        $('#Index').hide();
-        $('#Create').show();
-        document.getElementById("Form-Create").reset();
-        document.getElementById("Form-Edit").reset();
-    }
+        function Create() {
+            $('#Edit').hide();
+            $('#Index').hide();
+            $('#Create').show();
+            document.getElementById("Form-Create").reset();
+            document.getElementById("Form-Edit").reset();
+        }
 
         function getAjax() {
             $("#data-example").children().remove();
@@ -277,9 +299,9 @@
                                 "<td>" + data.harga + "</td>" +
 
                                 "<td><button type='button' class='btn btn-outline btn-primary' data-toggle='modal' data-target='#myModal'  " +
-                                "onclick='Detail(" + data.id + ")'>Detail</button>" +
-                                "<td><button type='button' class='btn btn-outline btn-info' " +
-                                "onclick='Edit(" + data.id + ")'>Edit</button>" +
+                                "onclick='Detail(" + data.id + ")'>Detail</button> " +
+                                "<button type='button' class='btn btn-outline btn-info' " +
+                                "onclick='Edit(" + data.id + ")'>Edit</button> " +
                                 "<button type='button' class='btn btn-outline btn-danger' " +
                                 "onclick='Hapus(" + data.id + ")'>Delete</button>" +
                                 "</td>" +
@@ -289,65 +311,29 @@
             }, 2200);
         }
 
-    function Edit(id) {
-        $('#Index').hide();
-        $('#Create').hide();
-        $('#Edit').hide();
-        document.getElementById("Form-Create").reset();
-        document.getElementById("Form-Edit").reset();
+        function Edit(id) {
+            $('#Index').hide();
+            $('#Create').hide();
+            $('#Edit').hide();
+            document.getElementById("Form-Create").reset();
+            document.getElementById("Form-Edit").reset();
 
-        $.ajax({
-            method:"Get",
-            url: '/makanan/' + id,
-            data: {}
-        })
-                .done(function (data){
-                    console.log(data.nama);
+            $.ajax({
+                        method: "Get",
+                        url: '/makanan/' + id,
+                        data: {}
+                    })
+                    .done(function (data) {
+                        console.log(data.id);
 //                    var $form = $(this),
-                    nama = $("input[name='nama']").val(data.nama);
-                    jenis_makanan = $("input[name='jenis_makanan']").val(data.jenis_makanan);
-                    rasa = $("input[name='rasa']").val(data.rasa);
-                    harga = $("input[name='harga']").val(data.harga);
-
-                    $('#Edit').show();
-                });
-
-        $("#Form-Edit").submit(function(event){
-
-            event.preventDefault();
-            var $form = $(this),
-                    nama = $form.find("input[name='nama']").val(),
-                    jenis_makanan = $form.find("input[name='jenis_makanan']").val(),
-                    rasa = $form.find("input[name='rasa']").val(),
-                    harga = $form.find("input[name='harga']").val();
-
-            currentRequest = $.ajax({
-                method: "PUT",
-                url: '/makanan/' + id,
-                data: {
-                    nama: nama,
-                    jenis_makanan: jenis_makanan,
-                    rasa: rasa,
-                    harga: harga
-                },
-                beforeSend: function () {
-                    if (currentRequest != null) {
-                        currentRequest.abort();
-                    }
-                },
-                success: function (data) {
-                    window.alert(data.result.message);
-                    Index();
-                },
-                error: function (data) {
-                    window.alert(data.result.message);
-                    Index();
-                }
-            });
-        });
-
-
-    }
+                        $("input[name='id']").val(data.id);
+                        $("input[name='nama']").val(data.nama);
+                        $("input[name='jenis_makanan']").val(data.jenis_makanan);
+                        $("input[name='rasa']").val(data.rasa);
+                        $("input[name='harga']").val(data.harga);
+                        $('#Edit').show();
+                    });
+        }
 
 
         function Detail(id) {
@@ -371,21 +357,21 @@
             });
         }
 
-    function Hapus(id) {
-        var result = confirm("Apakah Anda Yakin Ingin Menghapus ? ");
-        if (result) {
-            $.ajax({
-                method :"DELETE",
-                url:'/hapus-makanan/' +id,
-                data:{}
-            })
-                    .done(function (data) {
-                        window.alert(data.result.message);
-                        table.ajax.reload(null, false);
-                        Index();
-                    });
+        function Hapus(id) {
+            var result = confirm("Apakah Anda Yakin Ingin Menghapus ? ");
+            if (result) {
+                $.ajax({
+                            method: "DELETE",
+                            url: '/hapus-makanan/' + id,
+                            data: {}
+                        })
+                        .done(function (data) {
+                            window.alert(data.result.message);
+
+                            Index();
+                        });
+            }
         }
-    }
     </script>
     </body>
 @endsection

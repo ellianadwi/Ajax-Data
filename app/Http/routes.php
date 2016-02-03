@@ -24,7 +24,7 @@ Route::post('makanan', 'MakananController@store');
 
 Route::put('makanan/{id}', 'MakananController@update');
 
-Route::get('hapus-makanan/{id}', 'MakananController@destroy');
+Route::delete('hapus-makanan/{id}', 'MakananController@destroy');
 
 Route::get('/data-makanan','MakananController@getData');
 
@@ -42,6 +42,6 @@ Route::post('minuman', 'MinumanController@store');
 
 Route::put('minuman/{id}', 'MinumanController@update');
 
-Route::get('hapus-minuman/{id}', 'MinumanController@destroy');
+Route::delete('hapus-minuman/{id}', 'MinumanController@destroy');
 
 Route::get('/data-minuman','MinumanController@getData');

@@ -34,6 +34,9 @@
             <li>
                 <a href="/minuman"><i class="fa fa-glass fa-fw"></i> Minuman</a>
             </li>
+            <li>
+                <a href="/paket"><i class="fa fa-glass fa-fw"></i> paket</a>
+            </li>
 
             <li>
                 <a href="../pages/tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>

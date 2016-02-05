@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <label>Makanan</label>
                                         <label>:</label>
-                                        <select  id="makanan_id" class="form-control" name="makanan_id">
+                                        <select id="makanan_id" class="form-control" name="makanan_id">
 
                                         </select>
                                     </div>
@@ -71,7 +71,8 @@
                                     <div class="form-group">
                                         <label>Total Harga</label>
                                         <label>:</label>
-                                        <input type="text" class="form-control" name="total_harga">
+                                        <input type="text" class="form-control" name="total_harga"
+                                               onclick="getHarga()" readonly>
                                     </div>
                                     <div class="form-group">
 
@@ -107,13 +108,16 @@
                                         <div class="form-group">
                                             <label>Makanan</label>
                                             <label>:</label>
-                                            <input type="text" name="makanan_id" class="form-control" id="makanan_id">
+                                            <select id="makanan_id" name="makanan_id" class="form-control">
+
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Minuman</label>
                                             <label>:</label>
-                                            <input type="text" name="minuman_id" class="form-control"
-                                                   id="minuman_id">
+                                            <select id="minuman_id" name="minuman_id" class="form-control">
+
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Total Harga</label>
@@ -201,8 +205,8 @@
                 event.preventDefault();
                 var $form = $(this),
                         id = $form.find("input[name='id']").val(),
-                        makanan_id = $form.find("input[name='makanan_id']").val(),
-                        minuman_id = $form.find("input[name='minuman_id']").val(),
+                        makanan_id = $form.find("select[name='makanan_id']").val(),
+                        minuman_id = $form.find("select[name='minuman_id']").val(),
                         total_harga = $form.find("input[name='total_harga']").val();
 
                 currentRequest = $.ajax({
@@ -249,23 +253,23 @@
             getMakanan();
             getMinuman();
         }
-        function getMakanan(){
+        function getMakanan() {
             $('#makanan_id').children().remove();
             $.getJSON("/data-makanan", function (data) {
                 var jumlah = data.length;
                 $("#makanan_id").append("<option selected>pilih makanan</option>");
                 $.each(data.slice(0, jumlah), function (i, data) {
-                    $("#makanan_id").append("<option value='" + data.id + "'>"+ data.nama +"</option>");
+                    $("#makanan_id").append("<option value='" + data.id + "'>" + data.nama + "</option>");
                 })
             });
         }
-        function getMinuman(){
+        function getMinuman() {
             $('#minuman_id').children().remove();
             $.getJSON("/data-minuman", function (data) {
                 var jumlah = data.length;
                 $("#minuman_id").append("<option selected>pilih minuman</option>");
                 $.each(data.slice(0, jumlah), function (i, data) {
-                    $("#minuman_id").append("<option value='" + data.id + "'>"+ data.nama +"</option>");
+                    $("#minuman_id").append("<option value='" + data.id + "'>" + data.nama + "</option>");
                 })
             });
         }
@@ -296,7 +300,8 @@
                                 "</td>" +
                                 "</tr>");
                     })
-                }); }, 2200);
+                });
+            }, 2200);
         }
 
         function Edit(id) {
@@ -311,17 +316,35 @@
                         url: '/paket/' + id,
                         data: {}
                     })
-                    .done(function (data) {
-                        console.log(data.id);
-//                    var $form = $(this),
-                        $("input[name='id']").val(data.id);
-                        $("input[name='makanan_id']").val(data.makanan_id);
-                        $("input[name='minuman_id']").val(data.minuman_id);
-                        $("input[name='total_harga']").val(data.total_harga);
+                    .done(function (data_edit) {
+//                        console.log(data_edit.makanan_id.id);
+                        $("input[name='id']").val(data_edit.id);
+                        $("input[name='total_harga']").val(data_edit.total_harga);
+                        $.getJSON("/data-makanan", function (data) {
+                            var jumlah = data.length;
+                            $.each(data.slice(0, jumlah), function (i, data) {
+                                if (data_edit.makanan_id.id == data.id) {
+                                    $("select[name='makanan_id']").append("<option value='" + data.id + "' selected>" + data.nama + "</option>");
+                                }
+                                else {
+                                    $("select[name='makanan_id']").append("<option value='" + data.id + "'>" + data.nama + "</option>");
+                                }
+                            })
+                        });
+                        $.getJSON("/data-minuman", function (data) {
+                            var jumlah = data.length;
+                            $.each(data.slice(0, jumlah), function (i, data) {
+                                if (data_edit.minuman_id.id == data.id) {
+                                    $("select[name='minuman_id']").append("<option value='" + data.id + "' selected>" + data.nama + "</option>");
+                                }
+                                else {
+                                    $("select[name='minuman_id']").append("<option value='" + data.id + "'>" + data.nama + "</option>");
+                                }
+                            })
+                        });
                         $('#Edit').show();
                     });
         }
-
         function Detail(id) {
             $("#modal-body").children().remove();
             $.ajax({
@@ -334,8 +357,8 @@
                 success: function (data) {
 //                    $('#loader').hide();
                     $("#loader-wrapper").hide();
-                    $("#modal-body").append("<tr><td> Makanan</td><td> : </td><td>" + data.makanan_id + "</td></tr>" +
-                            "<tr><td> Minuman </td><td> : </td><td>" + data.minuman_id + "</td></tr>" +
+                    $("#modal-body").append("<tr><td> Makanan</td><td> : </td><td>" + data.makanan_id.nama + "</td></tr>" +
+                            "<tr><td> Minuman </td><td> : </td><td>" + data.minuman_id.nama + "</td></tr>" +
                             "<tr><td> Total Harga</td><td> : </td><td>" + data.total_harga + "</td></tr>"
                     );
                 }
@@ -355,6 +378,27 @@
                             Index();
                         });
             }
+        }
+
+        function getHarga() {
+//            $("#Form-Create").submit(function (event) {
+//                event.preventDefault();
+            var $form = $("#Form-Create"),
+                    makanan_id = $form.find("select[name='makanan_id']").val(),
+                    minuman_id = $form.find("select[name='minuman_id']").val();
+//                        total_harga = $form.find("input[name='total_harga']").val();
+            console.log(makanan_id + ' | ' + minuman_id);
+            $.ajax({
+                        method: "Get",
+                        url: '/get-harga/' + makanan_id + '/' + minuman_id,
+                        data: {}
+                    })
+                    .done(function (data) {
+                        console.log(data);
+                        $("input[name='total_harga']").val(data);
+                    });
+//
+//            });
         }
     </script>
     </body>

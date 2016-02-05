@@ -1,16 +1,12 @@
 @extends('layouts.master')
 @section('title', 'Page Title')
 @section('content')
-
     <body onload="Index()">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Minuman</h1>
-
+            <h1 class="page-header">Paket</h1>
         </div>
     </div>
-
-    <br>
     <div id="Index">
         <div class="row">
             <div class="col-lg-12">
@@ -18,7 +14,7 @@
                     <div class="panel-heading">
                         <button type="button" class="btn btn-outline btn-default"
                                 onclick="Create()">
-                            Tambah data
+                            Tambah Paket
                         </button>
                     </div>
                     <center>
@@ -31,10 +27,9 @@
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Nama</th>
-                                    <th>Jenis Minuman</th>
-                                    <th>Rasa</th>
-                                    <th>Harga</th>
+                                    <th>Makanan</th>
+                                    <th>Minuman</th>
+                                    <th>Total Harga</th>
                                     <th>Aksi</th>
                                 </tr>
                                 </thead>
@@ -42,48 +37,43 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div id="Create">
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Tambah Minuman
+                        Tambah Paket
                     </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-
                                 <form id="Form-Create">
                                     <div class="form-group">
-                                        <label>nama</label>
+                                        <label>Makanan</label>
                                         <label>:</label>
-                                        <input type="text" class="form-control" name="nama">
+                                        <input type="text" class="form-control" name="makanan">
                                     </div>
                                     <div class="form-group">
-                                        <label>Jenis_minuman</label>
+                                        <label>Minuman</label>
                                         <label>:</label>
-                                        <input type="text" class="form-control" name="jenis_minuman">
+                                        <input type="text" class="form-control" name="minuman">
                                     </div>
                                     <div class="form-group">
-                                        <label>Rasa</label>
+                                        <label>Total Harga</label>
                                         <label>:</label>
-                                        <input type="text" class="form-control" name="rasa">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Harga</label>
-                                        <label>:</label>
-                                        <input type="text" class="form-control" name="harga">
+                                        <input type="text" class="form-control" name="total_harga">
                                     </div>
                                     <div class="form-group">
 
-                                        <input class="btn btn-outline btn-info" type="submit" value="Simpan">
-                                        {{--onclick="location.href='/minuman/{{ $data->id }}}';">Simpan--}}
+                                        <input class="btn btn-outline btn-info" type="submit" id="Submit"
+                                               value="Simpan">
+                                        {{--onclick="location.href='/makanan/{{ $data->id }}}';">Simpan--}}
                                         <button type="button" class="btn btn-outline btn-primary"
                                                 onclick="Index()">Kembali
                                         </button>
@@ -91,22 +81,18 @@
                                 </form>
                             </div>
                         </div>
-
                     </div>
-                    <!-- /.panel-body -->
                 </div>
-                <!-- /.panel -->
             </div>
         </div>
     </div>
-
 
     <div id="Edit">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Edit Minuman
+                        Edit Paket #
                     </div>
                     <div class="panel-body">
                         <form role="form" id="Form-Edit">
@@ -115,31 +101,27 @@
                                     <form id="Form-Edit">
                                         <input type="hidden" name="id">
                                         <div class="form-group">
-                                            <label>Nama</label>
+                                            <label>Makanan</label>
                                             <label>:</label>
-                                            <input type="text" name="nama" class="form-control">
+                                            <input type="text" name="makanan" class="form-control" id="makanan">
                                         </div>
                                         <div class="form-group">
-                                            <label>Jenis Minuman</label>
+                                            <label>Minuman</label>
                                             <label>:</label>
-                                            <input type="text" name="jenis_minuman" class="form-control">
+                                            <input type="text" name="minuman" class="form-control"
+                                                   id="minuman">
                                         </div>
                                         <div class="form-group">
-                                            <label>rasa</label>
+                                            <label>Total Harga</label>
                                             <label>:</label>
-                                            <input type="text" name="rasa" class="form-control">
+                                            <input type="text" name="total_harga" class="form-control" id="total_harga">
                                         </div>
                                         <div class="form-group">
-                                            <label>Harga</label>
-                                            <label>:</label>
-                                            <input type="text" name="harga" class="form-control">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <input class="btn btn-outline btn-info" type="submit"
-                                                   value="Simpan">
+                                            <input class="btn btn-outline btn-info" type="submit" value="Simpan">
+                                            {{--onclick="location.href='/makanan/{{$data->id}}';">Simpan--}}
+                                            {{--</button>--}}
                                             <button type="button" class="btn btn-outline btn-primary"
-                                                    onclick="Index()">Kembali
+                                                    onclick="Index();">Kembali
                                             </button>
                                         </div>
                                     </form>
@@ -148,19 +130,10 @@
                         </form>
                     </div>
                 </div>
-
-                {{--</form>--}}
-
             </div>
-            <!-- /.panel-body -->
         </div>
-        <!-- /.panel -->
-    </div>
-    </div>
     </div>
 
-
-    <!-- /.row -->
     {{--Modal--}}
 
     {{--Detail Modal--}}
@@ -180,7 +153,6 @@
                     </div>
                     <table class="table table-striped">
                         <tbody id="modal-body">
-
                         </tbody>
                     </table>
                 </div>
@@ -190,7 +162,6 @@
             </div>
         </div>
     </div>
-
 
     <script src="{!! asset('bower_components/jquery/dist/jquery.min.js') !!}"></script>
     <script>
@@ -202,16 +173,14 @@
             $("#Form-Create").submit(function (event) {
                 event.preventDefault();
                 var $form = $(this),
-                        nama = $form.find("input[name='nama']").val(),
-                        jenis_minuman = $form.find("input[name='jenis_minuman']").val(),
-                        rasa = $form.find("input[name='rasa']").val(),
-                        harga = $form.find("input[name='harga']").val();
+                        makanan = $form.find("input[name='makanan']").val(),
+                        minuman = $form.find("input[name='minuman']").val(),
+                        total_harga = $form.find("input[name='total_harga']").val();
 //                $("#Form-Create").reset();
-                var posting = $.post('/minuman', {
-                    nama: nama,
-                    jenis_minuman: jenis_minuman,
-                    rasa: rasa,
-                    harga: harga
+                var posting = $.post('/paket', {
+                    makanan: makanan,
+                    minuman: minuman,
+                    total_harga: total_harga
                 });
                 //Put the results in a div
                 posting.done(function (data) {
@@ -228,19 +197,17 @@
                 event.preventDefault();
                 var $form = $(this),
                         id = $form.find("input[name='id']").val(),
-                        nama = $form.find("input[name='nama']").val(),
-                        jenis_minuman = $form.find("input[name='jenis_minuman']").val(),
-                        rasa = $form.find("input[name='rasa']").val(),
-                        harga = $form.find("input[name='harga']").val();
+                        makanan = $form.find("input[name='makanan']").val(),
+                        minuman = $form.find("input[name='minuman']").val(),
+                        total_harga = $form.find("input[name='total_harga']").val();
 
                 currentRequest = $.ajax({
                     method: "PUT",
-                    url: '/minuman/' + id,
+                    url: '/paket/' + id,
                     data: {
-                        nama: nama,
-                        jenis_minuman: jenis_minuman,
-                        rasa: rasa,
-                        harga: harga
+                        makanan: makanan,
+                        minuman: minuman,
+                        total_harga: total_harga
                     },
                     beforeSend: function () {
                         if (currentRequest != null) {
@@ -257,8 +224,6 @@
                     }
                 });
             });
-
-
         });
 
         function Index() {
@@ -286,30 +251,27 @@
                 opacity: 0,
                 width: 0,
                 height: 0
-
             }, 500);
             setTimeout(function () {
-                $.getJSON("/data-minuman", function (data) {
+                $.getJSON("/data-paket", function (data) {
                     var jumlah = data.length;
                     $.each(data.slice(0, jumlah), function (i, data) {
                         $("#data-example").append("" +
                                 "<tr>" +
-                                "<td>" + data.nama + "</td>" +
-                                "<td>" + data.jenis_minuman + "</td>" +
-                                "<td>" + data.rasa + "</td>" +
-                                "<td>" + data.harga + "</td>" +
+                                "<td>" + data.makanan + "</td>" +
+                                "<td>" + data.minuman + "</td>" +
+                                "<td>" + data.total_harga + "</td>" +
 
                                 "<td><button type='button' class='btn btn-outline btn-primary' data-toggle='modal' data-target='#myModal'  " +
-                                "onclick='Detail(" + data.id + ")'> Detail </button> " +
+                                "onclick='Detail(" + data.id + ")'>Detail</button> " +
                                 "<button type='button' class='btn btn-outline btn-info' " +
-                                "onclick='Edit(" + data.id + ")'> Edit </button> " +
-                                "<button type='button' class='btn btn-outline btn-danger' " +
-                                "onclick='Hapus(" + data.id + ")'> Delete </button>" +
+                                "onclick='Edit(" + data.id + ")'>Edit</button> " +
+                                "<button type='button' class='btn btn-outline btn-danger'  " +
+                                "onclick='Hapus(" + data.id + ")'>Delete</button>" +
                                 "</td>" +
                                 "</tr>");
                     })
-                });
-            }, 2200);
+                }); }, 2200);
         }
 
         function Edit(id) {
@@ -321,27 +283,25 @@
 
             $.ajax({
                         method: "Get",
-                        url: '/minuman/' + id,
+                        url: '/paket/' + id,
                         data: {}
                     })
                     .done(function (data) {
                         console.log(data.id);
 //                    var $form = $(this),
                         $("input[name='id']").val(data.id);
-                        $("input[name='nama']").val(data.nama);
-                        $("input[name='jenis_minuman']").val(data.jenis_minuman);
-                        $("input[name='rasa']").val(data.rasa);
-                        $("input[name='harga']").val(data.harga);
+                        $("input[name='makanan']").val(data.makanan);
+                        $("input[name='minuman']").val(data.minuman);
+                        $("input[name='total_harga']").val(data.total_harga);
                         $('#Edit').show();
                     });
         }
-
 
         function Detail(id) {
             $("#modal-body").children().remove();
             $.ajax({
                 method: "GET",
-                url: '/minuman/' + id,
+                url: '/paket/' + id,
                 data: {},
                 beforeSend: function () {
                     $('#loader-wrapper').show();
@@ -349,10 +309,9 @@
                 success: function (data) {
 //                    $('#loader').hide();
                     $("#loader-wrapper").hide();
-                    $("#modal-body").append("<tr><td> Nama </td><td> : </td><td>" + data.nama + "</td></tr>" +
-                            "<tr><td> Jenis Minuman </td><td> : </td><td>" + data.jenis_minuman + "</td></tr>" +
-                            "<tr><td> Rasa </td><td> : </td><td>" + data.rasa + "</td></tr>" +
-                            "<tr><td> Harga</td><td> : </td><td>" + data.harga + "</td></tr>"
+                    $("#modal-body").append("<tr><td> Makanan</td><td> : </td><td>" + data.makanan + "</td></tr>" +
+                            "<tr><td> Minuman </td><td> : </td><td>" + data.minuman + "</td></tr>" +
+                            "<tr><td> Total Harga</td><td> : </td><td>" + data.total_harga + "</td></tr>"
                     );
                 }
             });
@@ -363,12 +322,11 @@
             if (result) {
                 $.ajax({
                             method: "DELETE",
-                            url: '/hapus-minuman/' + id,
+                            url: '/hapus-paket/' + id,
                             data: {}
                         })
                         .done(function (data) {
                             window.alert(data.result.message);
-
                             Index();
                         });
             }

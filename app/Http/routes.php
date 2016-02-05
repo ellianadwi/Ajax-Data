@@ -11,6 +11,9 @@ Route::get('/create-makanan', function () {
 Route::get('/create-minuman', function () {
     return view('partials.minuman.create');
 });
+Route::get('/create-paket', function () {
+    return view('partials.paket.create');
+});
 
 Route::get('makanan', 'MakananController@index');
 
@@ -45,3 +48,20 @@ Route::put('minuman/{id}', 'MinumanController@update');
 Route::delete('hapus-minuman/{id}', 'MinumanController@destroy');
 
 Route::get('/data-minuman','MinumanController@getData');
+
+
+Route::get('paket', 'PaketController@index');
+
+Route::get('paket/{id}', 'PaketController@show');
+
+Route::get('detail-paket/{id}', 'PaketController@detail');
+
+Route::get('edit-paket/{id}', 'PaketController@edit');
+
+Route::post('paket', 'PaketController@store');
+
+Route::put('paket/{id}', 'PaketController@update');
+
+Route::delete('hapus-paket/{id}', 'PaketController@destroy');
+
+Route::get('/data-paket','PaketController@getData');

@@ -7,8 +7,6 @@
             <h1 class="page-header">Makanan</h1>
         </div>
     </div>
-
-    <br>
     <div id="Index">
         <div class="row">
             <div class="col-lg-12">
@@ -26,7 +24,6 @@
                     </center>
                     <div class="panel-body">
                         <div class="dataTable_wrapper">
-
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
@@ -40,9 +37,7 @@
                                 <tbody id="data-example">
                                 </tbody>
                             </table>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -92,15 +87,12 @@
                                 </form>
                             </div>
                         </div>
-
                     </div>
-                    <!-- /.panel-body -->
                 </div>
-                <!-- /.panel -->
             </div>
         </div>
-
     </div>
+
     <div id="Edit">
         <div class="row">
             <div class="col-lg-12">
@@ -135,7 +127,6 @@
                                             <label>:</label>
                                             <input type="text" name="harga" class="form-control" id="harga">
                                         </div>
-
                                         <div class="form-group">
                                             <input class="btn btn-outline btn-info" type="submit" value="Simpan">
                                             {{--onclick="location.href='/makanan/{{$data->id}}';">Simpan--}}
@@ -149,16 +140,10 @@
                             </div>
                         </form>
                     </div>
-                    {{--</form>--}}
-
                 </div>
-                <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
         </div>
     </div>
-    </div>
-
 
     {{--Modal--}}
 
@@ -179,7 +164,6 @@
                     </div>
                     <table class="table table-striped">
                         <tbody id="modal-body">
-
                         </tbody>
                     </table>
                 </div>
@@ -189,7 +173,6 @@
             </div>
         </div>
     </div>
-
 
     <script src="{!! asset('bower_components/jquery/dist/jquery.min.js') !!}"></script>
     <script>
@@ -256,8 +239,6 @@
                     }
                 });
             });
-
-
         });
 
         function Index() {
@@ -285,7 +266,6 @@
                 opacity: 0,
                 width: 0,
                 height: 0
-
             }, 500);
             setTimeout(function () {
                 $.getJSON("/data-makanan", function (data) {
@@ -302,13 +282,12 @@
                                 "onclick='Detail(" + data.id + ")'>Detail</button> " +
                                 "<button type='button' class='btn btn-outline btn-info' " +
                                 "onclick='Edit(" + data.id + ")'>Edit</button> " +
-                                "<button type='button' class='btn btn-outline btn-danger' " +
+                                "<button type='button' class='btn btn-outline btn-danger'  " +
                                 "onclick='Hapus(" + data.id + ")'>Delete</button>" +
                                 "</td>" +
                                 "</tr>");
                     })
-                });
-            }, 2200);
+                }); }, 2200);
         }
 
         function Edit(id) {
@@ -334,7 +313,6 @@
                         $('#Edit').show();
                     });
         }
-
 
         function Detail(id) {
             $("#modal-body").children().remove();
@@ -367,7 +345,6 @@
                         })
                         .done(function (data) {
                             window.alert(data.result.message);
-
                             Index();
                         });
             }

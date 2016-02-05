@@ -23,8 +23,8 @@ class PaketRepository extends AbstractRepository implements Crudable, Paginable
     {
 
         return parent::create([
-                'makanan' => e($data['makanan']),
-                'minuman' => e($data['minuman']),
+                'makanan_id' => e($data['makanan_id']),
+                'minuman_id' => e($data['minuman_id']),
                 'total_harga' => e($data['total_harga']),
             ]
         );
@@ -36,8 +36,8 @@ class PaketRepository extends AbstractRepository implements Crudable, Paginable
     public function update($id, array $data)
     {
         return parent::update($id, [
-                'makanan' => e($data['makanan']),
-                'minuman' => e($data['minuman']),
+                'makanan_id' => e($data['makanan_id']),
+                'minuman_id' => e($data['minuman_id']),
                 'total_harga' => e($data['total_harga']),
             ]
         );
@@ -53,7 +53,7 @@ class PaketRepository extends AbstractRepository implements Crudable, Paginable
 
     public function search($query)
     {
-        return parent::likeSearch('makanan', $query);
+        return parent::likeSearch('makanan_id', $query);
     }
 
 
@@ -64,7 +64,7 @@ class PaketRepository extends AbstractRepository implements Crudable, Paginable
 
     public function getData()
     {
-        $data=$this->model->get();
+        $data=$this->model->with('makanan_id' , 'minuman_id')->get();
 
         return $data;
     }

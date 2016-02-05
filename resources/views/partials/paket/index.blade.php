@@ -57,12 +57,16 @@
                                     <div class="form-group">
                                         <label>Makanan</label>
                                         <label>:</label>
-                                        <input type="text" class="form-control" name="makanan">
+                                        <select  id="makanan_id" class="form-control" name="makanan_id">
+
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Minuman</label>
                                         <label>:</label>
-                                        <input type="text" class="form-control" name="minuman">
+                                        <select id="minuman_id" class="form-control" name="minuman_id">
+
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Total Harga</label>
@@ -103,13 +107,13 @@
                                         <div class="form-group">
                                             <label>Makanan</label>
                                             <label>:</label>
-                                            <input type="text" name="makanan" class="form-control" id="makanan">
+                                            <input type="text" name="makanan_id" class="form-control" id="makanan_id">
                                         </div>
                                         <div class="form-group">
                                             <label>Minuman</label>
                                             <label>:</label>
-                                            <input type="text" name="minuman" class="form-control"
-                                                   id="minuman">
+                                            <input type="text" name="minuman_id" class="form-control"
+                                                   id="minuman_id">
                                         </div>
                                         <div class="form-group">
                                             <label>Total Harga</label>
@@ -173,13 +177,13 @@
             $("#Form-Create").submit(function (event) {
                 event.preventDefault();
                 var $form = $(this),
-                        makanan = $form.find("input[name='makanan']").val(),
-                        minuman = $form.find("input[name='minuman']").val(),
+                        makanan_id = $form.find("select[name='makanan_id']").val(),
+                        minuman_id = $form.find("select[name='minuman_id']").val(),
                         total_harga = $form.find("input[name='total_harga']").val();
 //                $("#Form-Create").reset();
                 var posting = $.post('/paket', {
-                    makanan: makanan,
-                    minuman: minuman,
+                    makanan_id: makanan_id,
+                    minuman_id: minuman_id,
                     total_harga: total_harga
                 });
                 //Put the results in a div
@@ -197,16 +201,16 @@
                 event.preventDefault();
                 var $form = $(this),
                         id = $form.find("input[name='id']").val(),
-                        makanan = $form.find("input[name='makanan']").val(),
-                        minuman = $form.find("input[name='minuman']").val(),
+                        makanan_id = $form.find("input[name='makanan_id']").val(),
+                        minuman_id = $form.find("input[name='minuman_id']").val(),
                         total_harga = $form.find("input[name='total_harga']").val();
 
                 currentRequest = $.ajax({
                     method: "PUT",
                     url: '/paket/' + id,
                     data: {
-                        makanan: makanan,
-                        minuman: minuman,
+                        makanan_id: makanan_id,
+                        minuman_id: minuman_id,
                         total_harga: total_harga
                     },
                     beforeSend: function () {
@@ -242,8 +246,29 @@
             $('#Create').show();
             document.getElementById("Form-Create").reset();
             document.getElementById("Form-Edit").reset();
+            getMakanan();
+            getMinuman();
         }
-
+        function getMakanan(){
+            $('#makanan_id').children().remove();
+            $.getJSON("/data-makanan", function (data) {
+                var jumlah = data.length;
+                $("#makanan_id").append("<option selected>pilih makanan</option>");
+                $.each(data.slice(0, jumlah), function (i, data) {
+                    $("#makanan_id").append("<option value='" + data.id + "'>"+ data.nama +"</option>");
+                })
+            });
+        }
+        function getMinuman(){
+            $('#minuman_id').children().remove();
+            $.getJSON("/data-minuman", function (data) {
+                var jumlah = data.length;
+                $("#minuman_id").append("<option selected>pilih minuman</option>");
+                $.each(data.slice(0, jumlah), function (i, data) {
+                    $("#minuman_id").append("<option value='" + data.id + "'>"+ data.nama +"</option>");
+                })
+            });
+        }
         function getAjax() {
             $("#data-example").children().remove();
 
@@ -258,8 +283,8 @@
                     $.each(data.slice(0, jumlah), function (i, data) {
                         $("#data-example").append("" +
                                 "<tr>" +
-                                "<td>" + data.makanan + "</td>" +
-                                "<td>" + data.minuman + "</td>" +
+                                "<td>" + data.makanan_id.nama + "</td>" +
+                                "<td>" + data.minuman_id.nama + "</td>" +
                                 "<td>" + data.total_harga + "</td>" +
 
                                 "<td><button type='button' class='btn btn-outline btn-primary' data-toggle='modal' data-target='#myModal'  " +
@@ -290,8 +315,8 @@
                         console.log(data.id);
 //                    var $form = $(this),
                         $("input[name='id']").val(data.id);
-                        $("input[name='makanan']").val(data.makanan);
-                        $("input[name='minuman']").val(data.minuman);
+                        $("input[name='makanan_id']").val(data.makanan_id);
+                        $("input[name='minuman_id']").val(data.minuman_id);
                         $("input[name='total_harga']").val(data.total_harga);
                         $('#Edit').show();
                     });
@@ -309,8 +334,8 @@
                 success: function (data) {
 //                    $('#loader').hide();
                     $("#loader-wrapper").hide();
-                    $("#modal-body").append("<tr><td> Makanan</td><td> : </td><td>" + data.makanan + "</td></tr>" +
-                            "<tr><td> Minuman </td><td> : </td><td>" + data.minuman + "</td></tr>" +
+                    $("#modal-body").append("<tr><td> Makanan</td><td> : </td><td>" + data.makanan_id + "</td></tr>" +
+                            "<tr><td> Minuman </td><td> : </td><td>" + data.minuman_id + "</td></tr>" +
                             "<tr><td> Total Harga</td><td> : </td><td>" + data.total_harga + "</td></tr>"
                     );
                 }

@@ -35,7 +35,7 @@
                 <a href="/minuman"><i class="fa fa-glass fa-fw"></i> Minuman</a>
             </li>
             <li>
-                <a href="/paket"><i class="fa fa-group fa-fw"></i> paket</a>
+                <a href="/paket"><i class="fa fa-tasks fa-fw"></i> paket</a>
             </li>
 
             <li>

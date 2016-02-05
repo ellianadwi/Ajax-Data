@@ -12,7 +12,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Edit Makanan # {{ $data->id }}
+                    Edit Paket # {{ $data->id }}
                 </div>
                 <div class="panel-body">
                     {{--<form role="form">--}}
@@ -22,31 +22,26 @@
                                 <form role="form" action="" method="post">
                                     {{ method_field('PUT') }}
                                     <div class="form-group">
-                                        <label>Nama</label>
+                                        <label>Makanan</label>
                                         <label>:</label>
-                                        <input type="text" name="nama" class="form-control" value="{{ $data->nama }}">
+                                        <input type="text" name="makanan" class="form-control" value="{{ $data->makanan }}">
                                     </div>
                                     <div class="form-group">
-                                        <label>Jenis Makanan</label>
+                                        <label>Minuman</label>
                                         <label>:</label>
-                                        <input type="text" name="jenis_makanan" class="form-control" value="{{ $data->jenis_makanan }}">
+                                        <input type="text" name="minuman" class="form-control" value="{{ $data->minuman }}">
                                     </div>
                                     <div class="form-group">
-                                        <label>rasa</label>
+                                        <label>Total Harga</label>
                                         <label>:</label>
-                                        <input type="text" name="rasa" class="form-control" value="{{ $data->rasa }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Harga</label>
-                                        <label>:</label>
-                                        <input type="text" name="harga" class="form-control" value="{{ $data->harga }}">
+                                        <input type="text" name="total_harga" class="form-control" value="{{ $data->total_harga }}">
                                     </div>
 
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-outline btn-info">Simpan
                                         </button>
                                         <button type="button" class="btn btn-outline btn-primary"
-                                                onclick="location.href='/makanan';">Kembali
+                                                onclick="location.href='/paket';">Kembali
                                         </button>
                                     </div>
                                 </form>

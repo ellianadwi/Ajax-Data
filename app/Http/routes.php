@@ -66,3 +66,4 @@ Route::delete('hapus-paket/{id}', 'PaketController@destroy');
 Route::get('/data-paket', 'PaketController@getData');
 
 Route::get('get-harga/{makanan_id}/{minuman_id}', 'PaketController@getHarga');
+

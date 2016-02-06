@@ -122,7 +122,8 @@
                                         <div class="form-group">
                                             <label>Total Harga</label>
                                             <label>:</label>
-                                            <input type="text" name="total_harga" class="form-control" id="total_harga">
+                                            <input type="text" name="total_harga" class="form-control" id="total_harga"
+                                                   onclick="getHarga2()" readonly>
                                         </div>
                                         <div class="form-group">
                                             <input class="btn btn-outline btn-info" type="submit" value="Simpan">
@@ -384,6 +385,27 @@
 //            $("#Form-Create").submit(function (event) {
 //                event.preventDefault();
             var $form = $("#Form-Create"),
+                    makanan_id = $form.find("select[name='makanan_id']").val(),
+                    minuman_id = $form.find("select[name='minuman_id']").val();
+//                        total_harga = $form.find("input[name='total_harga']").val();
+            console.log(makanan_id + ' | ' + minuman_id);
+            $.ajax({
+                        method: "Get",
+                        url: '/get-harga/' + makanan_id + '/' + minuman_id,
+                        data: {}
+                    })
+                    .done(function (data) {
+                        console.log(data);
+                        $("input[name='total_harga']").val(data);
+                    });
+//
+//            });
+        }
+
+        function getHarga2() {
+//            $("#Form-Create").submit(function (event) {
+//                event.preventDefault();
+            var $form = $("#Form-Edit"),
                     makanan_id = $form.find("select[name='makanan_id']").val(),
                     minuman_id = $form.find("select[name='minuman_id']").val();
 //                        total_harga = $form.find("input[name='total_harga']").val();

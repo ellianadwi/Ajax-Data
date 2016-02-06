@@ -16,7 +16,7 @@ class PaketRepository extends AbstractRepository implements Crudable, Paginable
 
     public function find($id, array $columns = ['*'])
     {
-        return parent::find($id, $columns);
+        return parent::find($id, $columns,'makanan_id', 'minuman_id');
     }
 
     public function create(array $data)
@@ -64,8 +64,38 @@ class PaketRepository extends AbstractRepository implements Crudable, Paginable
 
     public function getData()
     {
-        $data=$this->model->with('makanan_id' , 'minuman_id')->get();
+        $data = $this->model->with('makanan_id', 'minuman_id')->get();
 
         return $data;
+    }
+
+    public function getHarga($makanan_id, $minuman_id)
+    {
+        $harga_makanan = \DB::table('makanan')
+            ->where('id', $makanan_id)
+            ->sum('harga');
+
+        $harga_minuman = \DB::table('minuman')
+            ->where('id', $minuman_id)
+            ->sum('harga');
+
+        $total = $harga_makanan + $harga_minuman;
+
+        return $total;
+    }
+
+    public function getHarga2($makanan_id, $minuman_id)
+    {
+        $harga_makanan = \DB::table('makanan')
+            ->where('id', $makanan_id)
+            ->sum('harga');
+
+        $harga_minuman = \DB::table('minuman')
+            ->where('id', $minuman_id)
+            ->sum('harga');
+
+        $total = $harga_makanan + $harga_minuman;
+
+        return $total;
     }
 }

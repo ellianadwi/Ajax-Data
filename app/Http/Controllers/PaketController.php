@@ -62,5 +62,10 @@ class PaketController extends Controller
         return $this->paket->delete($id);
     }
 
+    public function getHarga($makanan_id, $minuman_id)
+    {
+        return $this->paket->getHarga($makanan_id, $minuman_id);
+    }
+
 
 }
